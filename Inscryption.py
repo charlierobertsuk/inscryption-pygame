@@ -19,7 +19,10 @@ pygame.init()
 # font
 font = pygame.font.Font(None, 36)
 
-# state colours
+print(cards.hampter["health"])
+
+# constants
+
 KYLE = ("#987654")
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
@@ -27,11 +30,8 @@ RED = (255, 0, 0)
 GREEN = (0, 255, 0)
 BLUE = (0, 0, 255)
 
-print(cards.hampter["health"])
-
-# constants
-
 # variables
+lives = 2
 
 # game loop
 while True:
@@ -41,7 +41,7 @@ while True:
             sys.exit()
 
     # background colour
-    screen.fill(KYLE)
+    screen.fill(KYLE) 
 
     
     # display update
