@@ -1,4 +1,4 @@
-# freecodecamp - youtube - python multiplayer game development totorial
+# freecodecamp - youtube - python multiplayer game development totorial NOTE: 50:32
 
 import socket, sys # socket and thread handle connections to the server
 from _thread import *
