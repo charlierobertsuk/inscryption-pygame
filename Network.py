@@ -6,7 +6,10 @@ class Network:
         self.server = "192.168.0.114" # cmd - ipconfig - ipv4 - NOTE: needs to be same as server.py address
         self.port = 5555 # also needs to be the same
         self.addr = (self.server, self.port)
-        self.id = self.connect()
+        self.pos = self.connect()
+
+    def getPos(self):
+        return self.pos
 
     def connect(self):
         try:
