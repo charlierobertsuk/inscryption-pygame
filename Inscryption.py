@@ -22,7 +22,6 @@ font = pygame.font.Font(None, 36)
 print(cards.hampter["health"])
 
 # constants
-
 KYLE = ("#987654")
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
