@@ -31,3 +31,4 @@ mole = {"health":1, "attack":0, "blood":0, "bones":0}
 capybara = {"health":2, "attack":1, "blood":1, "bones":0}
 polarBear = {"health":4, "attack":4, "blood":4, "bones":0}
 proboscisMonkey = {"health":3, "attack":2, "blood":3, "bones":0}
+BrianCoral = {"health":4, "attack":0, "blood":0, "bones":4} # Says: "Hi, I'm Brian"
