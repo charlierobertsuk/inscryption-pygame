@@ -17,7 +17,7 @@ s.listen(2) # opens up the port (if empty, unlimited people. 2 means only 2 peop
 print("Waiting for a connection, Server Started")
 
 def threaded_client(conn):
-    
+    conn.send(str.encode("Connected"))
     reply = ""
     while True:
         try:
