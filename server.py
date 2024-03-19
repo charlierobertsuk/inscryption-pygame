@@ -35,6 +35,9 @@ def threaded_client(conn):
         except:
             break
 
+    print("Lost connection")
+    conn.close()
+
 
 while True:
     conn, addr = s.accept() # accepte any incoming connections
