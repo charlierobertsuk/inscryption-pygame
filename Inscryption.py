@@ -1,4 +1,5 @@
-import cards, pygame, sys, random, time
+import pygame
+import sys
 
 # screen size
 screen_width = 1000
@@ -21,46 +22,18 @@ pygame.init()
 # font
 font = pygame.font.Font(None, 36)
 
-print(cards.hamster)
-
 # constants
-KYLE = ("#987654")
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 RED = (255, 0, 0)
 GREEN = (0, 255, 0)
 BLUE = (0, 0, 255)
+BROWN = (204, 145, 92)
 
 # variables
-lives = 2
+cardsize = 100
+card = pygame.Rect((screen_width//2-cardsize//2), (screen_height//2+50), cardsize, cardsize*1.7)
 
-class Player():
-    def __init__(self, x, y, screen_width, screen_height, colour):
-        self.x = x
-        self.y = y
-        self.screen_width = screen_width
-        self.screen_height = screen_height
-        self.colour = colour
-        self.rect = (x, y, screen_width, screen_height)
-
-    def draw(self, screen):
-        pygame.draw.rect(screen, self.colour, self.rect)
-
-    def move(self):
-        keys = pygame.key.get_pressed()
-
-        if keys[pygame.K_LEFT]:
-            pass #NOTE: before server go to 12:48 to do client so position tracking works
-        if keys[pygame.K_RIGHT]:
-            pass
-        if keys[pygame.K_UP]:
-            pass
-        if keys[pygame.K_DOWN]:
-            pass
-
-
-n = Network()
-startPos = n.getPos()
 # game loop
 while True:
     for event in pygame.event.get():
@@ -69,11 +42,13 @@ while True:
             sys.exit()
 
     # background colour
-    screen.fill(KYLE) 
-
+    screen.fill(WHITE) 
     
+    # draw
+    pygame.draw.rect(screen, BROWN, card)
+
     # display update
-    pygame.display.update()
+    pygame.display.flip()
 
     # set game fps
     clock.tick(60)
