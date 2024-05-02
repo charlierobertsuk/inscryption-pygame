@@ -1,5 +1,4 @@
-import pygame
-import sys
+import pygame, sys, cards
 
 # screen size
 screen_width = 1000
