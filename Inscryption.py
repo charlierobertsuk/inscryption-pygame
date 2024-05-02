@@ -1,5 +1,4 @@
 import cards, pygame, sys, random, time
-from network import Network
 
 # screen size
 screen_width = 1000
@@ -22,7 +21,7 @@ pygame.init()
 # font
 font = pygame.font.Font(None, 36)
 
-print(cards.hampter["health"])
+print(cards.hamster)
 
 # constants
 KYLE = ("#987654")
