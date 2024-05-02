@@ -45,4 +45,4 @@ baldEagle = {"health":3, "attack":3, "blood":3, "bones":0}
 runnerDuck = {"health":1, "attack":1, "blood":1, "bones":0}
 augurBuzzard = {"health":3, "attack":2, "blood":3, "bones":0} # Dodges first attack when played, 20% dodge chance
 roadRunner = {"health":1, "attack":2, "blood":2, "bones":0} # 10% dodge chance
-vulture = {"health":3, "attack":2, "blood":0, "bones":0} # 5% chacne to appear in hand when something dies
+vulture = {"health":3, "attack":2, "blood":0, "bones":0} # 5% chance to appear in hand when something dies

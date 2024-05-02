@@ -1,4 +1,4 @@
-import pygame, sys, cards
+import pygame, sys, random, cards
 
 # screen size
 screen_width = 1000
@@ -33,6 +33,12 @@ BROWN = (204, 145, 92)
 cardsize = 100
 card = pygame.Rect((screen_width//2-cardsize//2), (screen_height//2+50), cardsize, cardsize*1.7)
 
+# Sample card data
+cards = {
+    "attack": 5,
+    "defense": 7
+}
+
 # game loop
 while True:
     for event in pygame.event.get():
@@ -45,6 +51,18 @@ while True:
     
     # draw
     pygame.draw.rect(screen, BROWN, card)
+
+    # Render numbers on the card
+    attack_text = font.render(str(cards.hamster["attack"]), True, BLACK)
+    defense_text = font.render(str(cards.hamster["health"]), True, BLACK)
+    
+    # Positioning the numbers on the card
+    attack_text_rect = attack_text.get_rect(midtop=(card.centerx, card.bottom + 10))
+    defense_text_rect = defense_text.get_rect(midbottom=(card.centerx, card.bottom - 10))
+
+    # Blit the numbers onto the card surface
+    screen.blit(attack_text, attack_text_rect)
+    screen.blit(defense_text, defense_text_rect)
 
     # display update
     pygame.display.flip()
