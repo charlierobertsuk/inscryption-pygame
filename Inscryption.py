@@ -29,7 +29,7 @@ BROWN = (204, 145, 92)
 
 # variables
 cardsize = 100
-cardimg = pygame.image.load("inscryotioncard.jpg")
+cardimg = pygame.image.load("inscryptioncard.jpg")
 card = pygame.transform.scale(cardimg, (cardsize+100, cardsize+150))
 card_rect = card.get_rect(topleft=(screen_width//2-cardsize//2, (screen_height//2)+50))
 
@@ -48,20 +48,20 @@ while True:
 
     # write numbers on the card
     attack_text = font.render(str(cards.hamster["attack"]), True, BLACK)
-    defense_text = font.render(str(cards.hamster["health"]), True, BLACK)
+    health_text = font.render(str(cards.hamster["health"]), True, BLACK)
     blood_text = font.render(str(cards.hamster["blood"]), True, BLACK)
     bones_text = font.render(str(cards.hamster["bones"]), True, BLACK)
-    name_text = font.render(str("hamster"), True, BLACK)
+    name_text = font.render(str("Hamster"), True, BLACK)
 
-    attack_text_rect = attack_text.get_rect(midbottom=(card_rect.centerx + 30, card_rect.bottom - 5))
-    defense_text_rect = defense_text.get_rect(midbottom=(card_rect.centerx - 30, card_rect.bottom - 5))
-    blood_text_rect = blood_text.get_rect(midtop=(card_rect.centerx + 30, card_rect.top + 5))
-    bones_text_rect = bones_text.get_rect(midtop=(card_rect.centerx - 30, card_rect.top + 5))
-    name_text_rect = name_text.get_rect(midtop=(card_rect.centerx, card_rect.top + (cardsize//2)*1.4))
+    attack_text_rect = attack_text.get_rect(midbottom=(card_rect.left + 30, card_rect.bottom - 40))
+    health_text_rect = health_text.get_rect(midbottom=(card_rect.right - 30, card_rect.bottom - 10))
+    blood_text_rect = blood_text.get_rect(midtop=(card_rect.left + 30, card_rect.top + 10))
+    bones_text_rect = bones_text.get_rect(midtop=(card_rect.right - 30, card_rect.top + 10))
+    name_text_rect = name_text.get_rect(midtop=(card_rect.centerx, card_rect.top + 10))
 
     # display text
     screen.blit(attack_text, attack_text_rect)
-    screen.blit(defense_text, defense_text_rect)
+    screen.blit(health_text, health_text_rect)
     screen.blit(blood_text, blood_text_rect)
     screen.blit(bones_text, bones_text_rect)
     screen.blit(name_text, name_text_rect)
