@@ -5,7 +5,7 @@ BrianCoral = {"health":4, "attack":0, "blood":0, "bones":4} # Says: "Hi, I'm Bri
 
 # Ground animals
 hamster = {"health":1, "attack":0, "blood":0, "bones":0} # Starter card
-mole = {"health":1, "attack":0, "blood":0, "bones":0} # Alternative starter card, moves to attack if nothing to block
+mole = {"health":1, "attack":0, "blood":0, "bones":0} # Alternative starter card, moves to block if nothing to block
 
 deer = {"health":3, "attack":2, "blood":0, "bones":3}
 blackMamba = {"health":1, "attack":2, "blood":0, "bones":4} # Kills cards instantly
