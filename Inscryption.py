@@ -3,52 +3,51 @@ import random
 
 cards = {
     # Talking cards
-    "bulletAnt": {"health":1, "attack":1, "blood":1, "bones":0}, 
-    "pineMartin": {"health":2, "attack":1, "blood":1, "bones":0}, 
-    "BrianCoral": {"health":4, "attack":0, "blood":0, "bones":4}, # Says: "Hi, I'm Brian"
+    "Bullet Ant": {"health":1, "attack":1, "blood":1, "bones":0}, 
+    "Pine Martin": {"health":2, "attack":1, "blood":1, "bones":0}, 
+    "Brian Coral": {"health":4, "attack":0, "blood":0, "bones":4}, # Says: "Hi, I'm Brian"
     
     # Ground cards
-    "hamster": {"health":1, "attack":0, "blood":0, "bones":0}, # Starter card
-    "mole": {"health":1, "attack":0, "blood":0, "bones":0}, # Alternative starter card, moves to block if nothing to block
+    "Hamster": {"health":1, "attack":0, "blood":0, "bones":0}, # Starter card
+    "Mole": {"health":1, "attack":0, "blood":0, "bones":0}, # Alternative starter card, moves to block if nothing to block
     
-    "deer": {"health":3, "attack":2, "blood":0, "bones":3},
-    "blackMamba": {"health":1, "attack":2, "blood":0, "bones":4}, # Kills cards instantly
-    "hoppingMouse": {"health":1, "attack":1, "blood":0, "bones":1},
-    "armadillo": {"health":4, "attack":1, "blood":3, "bones":0},
-    "opossum": {"health":1, "attack":1, "blood":1, "bones":0},
-    "slowLoris": {"health":1, "attack":3, "blood":2, "bones":0}, # Venom damage
-    "wolverine": {"health":2, "attack":2, "blood":2, "bones":0},
-    "hedgehog": {"health":1, "attack":1, "blood":1, "bones":0},
-    "pinkFairyArmadillo": {"health":1, "attack":1, "blood":0, "bones":0}, # Dies if near water animal
-    "beardedDragon": {"health":2, "attack":1, "blood":1, "bones":0},
-    "tapir": {"health":3, "attack":1, "blood":2, "bones":0},
-    "rhino": {"health":6, "attack":2, "blood":4, "bones":0},
-    "anteater": {"health":2, "attack":1, "blood":1, "bones":0},
-    "capybara": {"health":2, "attack":1, "blood":1, "bones":0},
-    "polarBear": {"health":4, "attack":4, "blood":4, "bones":0},
-    "proboscisMonkey": {"health":3, "attack":2, "blood":3, "bones":0},
+    "Deer": {"health":3, "attack":2, "blood":0, "bones":3},
+    "Black Mamba": {"health":1, "attack":2, "blood":0, "bones":4}, # Kills cards instantly
+    "Hopping Mouse": {"health":1, "attack":1, "blood":0, "bones":1},
+    "Armadillo": {"health":4, "attack":1, "blood":3, "bones":0}, # Reflects 1 of incoming damage
+    "Opossum": {"health":1, "attack":1, "blood":1, "bones":0},
+    "Slow Loris": {"health":1, "attack":3, "blood":2, "bones":0}, # 1 venom damage to opponent for 3 turns
+    "Wolverine": {"health":2, "attack":2, "blood":2, "bones":0},
+    "Hedgehog": {"health":1, "attack":1, "blood":1, "bones":0},
+    "Bearded Dragon": {"health":2, "attack":1, "blood":1, "bones":0},
+    "Tapir": {"health":3, "attack":1, "blood":2, "bones":0},
+    "Rhino": {"health":6, "attack":2, "blood":4, "bones":0},
+    "Anteater": {"health":2, "attack":1, "blood":1, "bones":0},
+    "Capybara": {"health":2, "attack":1, "blood":1, "bones":0},
+    "Polar Bear": {"health":4, "attack":4, "blood":4, "bones":0},
+    "Monkey": {"health":3, "attack":2, "blood":3, "bones":0},
     
     # Water cards
-    "seal": {"health":3, "attack":1, "blood":2, "bones":0},
-    "goblinShark": {"health":2, "attack":2, "blood":2, "bones":0},
-    "flyingFish": {"health":1, "attack":1, "blood":1, "bones":0},
-    "scorpionFish": {"health":1, "attack":2, "blood":2, "bones":0},
-    "blobFish": {"health":4, "attack":0, "blood":3, "bones":0},
-    "mimicOctopus": {"health":0, "attack":0, "blood":2, "bones":0}, # Mirrors opponent attack and health 
-    "axolotl": {"health":1, "attack":1, "blood":1, "bones":0},
-    "narwhal": {"health":3, "attack":3, "blood":3, "bones":0},
-    "platypus": {"health":2, "attack":2, "blood":2, "bones":0},
+    "Seal": {"health":3, "attack":1, "blood":2, "bones":0},
+    "Goblin Shark": {"health":2, "attack":2, "blood":2, "bones":0},
+    "Flying Fish": {"health":1, "attack":1, "blood":1, "bones":0},
+    "Salmon": {"health":2, "attack":1, "blood":2, "bones":0},
+    "Blob Fish": {"health":4, "attack":0, "blood":3, "bones":0},
+    "Mimic Octopus": {"health":0, "attack":0, "blood":2, "bones":0}, # Mirrors opponent attack and health 
+    "Axolotl": {"health":1, "attack":1, "blood":1, "bones":0},
+    "Narwhal": {"health":3, "attack":3, "blood":3, "bones":0},
+    "Platypus": {"health":2, "attack":2, "blood":2, "bones":0},
     
     # Air cards
-    "moorhen": {"health":2, "attack":1, "blood":1, "bones":0},
-    "shoebill": {"health":1, "attack":2, "blood":0, "bones":3},
-    "pigeon": {"health":1, "attack":1, "blood":1, "bones":0},
-    "falcon": {"health":2, "attack":3, "blood":2, "bones":0},
-    "baldEagle": {"health":3, "attack":3, "blood":3, "bones":0},
-    "runnerDuck": {"health":1, "attack":1, "blood":1, "bones":0},
-    "augurBuzzard": {"health":3, "attack":2, "blood":3, "bones":0}, # Dodges first attack when played, 20% dodge chance
-    "roadRunner": {"health":1, "attack":2, "blood":2, "bones":0}, # 10% dodge chance
-    "vulture": {"health":3, "attack":2, "blood":0, "bones":0} # 5% chance to appear in hand when something dies
+    "Moorhen": {"health":2, "attack":1, "blood":1, "bones":0},
+    "Shoebill": {"health":1, "attack":2, "blood":0, "bones":3},
+    "Pigeon": {"health":1, "attack":1, "blood":1, "bones":0},
+    "Falcon": {"health":2, "attack":3, "blood":2, "bones":0},
+    "Bald Eagle": {"health":3, "attack":3, "blood":3, "bones":0},
+    "Runner Duck": {"health":1, "attack":1, "blood":1, "bones":0},
+    "Buzzard": {"health":3, "attack":2, "blood":3, "bones":0}, # Dodges first attack when played, 20% dodge chance
+    "Road Runner": {"health":1, "attack":2, "blood":2, "bones":0}, # 10% dodge chance
+    "Vulture": {"health":3, "attack":2, "blood":0, "bones":0} # 5% chance to appear in hand when something dies
 }
 
 pygame.init()
@@ -63,7 +62,7 @@ card_image = pygame.image.load("inscryptioncard.jpg")
 def draw_card(card, x, y):
     card_image = pygame.transform.scale(pygame.image.load("inscryptioncard.jpg"), (100, 150))
     screen.blit(card_image, (x, y))
-    font = pygame.font.Font(None, 24)
+    font = pygame.font.Font(None, 18)
     text_color = (255, 255, 255)
     text_x = x + 10
     text_y = y + 10
