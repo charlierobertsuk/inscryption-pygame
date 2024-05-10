@@ -7,8 +7,6 @@ half_width = screen_width // 2
 half_height = screen_height // 2
 screen = pygame.display.set_mode((screen_width, screen_height))
 
-clientnumber = 0
-
 # title
 pygame.display.set_caption("Inscryption")
 
