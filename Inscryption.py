@@ -1,73 +1,109 @@
-import pygame, sys, random, cards
+import pygame
+import random
 
-# screen size
-screen_width = 1200
-screen_height = 700
-half_width = screen_width // 2
-half_height = screen_height // 2
-screen = pygame.display.set_mode((screen_width, screen_height))
+cards = {
+    # Talking cards
+    "bulletAnt": {"health":1, "attack":1, "blood":1, "bones":0}, 
+    "pineMartin": {"health":2, "attack":1, "blood":1, "bones":0}, 
+    "BrianCoral": {"health":4, "attack":0, "blood":0, "bones":4}, # Says: "Hi, I'm Brian"
+    
+    # Ground cards
+    "hamster": {"health":1, "attack":0, "blood":0, "bones":0}, # Starter card
+    "mole": {"health":1, "attack":0, "blood":0, "bones":0}, # Alternative starter card, moves to block if nothing to block
+    
+    "deer": {"health":3, "attack":2, "blood":0, "bones":3},
+    "blackMamba": {"health":1, "attack":2, "blood":0, "bones":4}, # Kills cards instantly
+    "hoppingMouse": {"health":1, "attack":1, "blood":0, "bones":1},
+    "armadillo": {"health":4, "attack":1, "blood":3, "bones":0},
+    "opossum": {"health":1, "attack":1, "blood":1, "bones":0},
+    "slowLoris": {"health":1, "attack":3, "blood":2, "bones":0}, # Venom damage
+    "wolverine": {"health":2, "attack":2, "blood":2, "bones":0},
+    "hedgehog": {"health":1, "attack":1, "blood":1, "bones":0},
+    "pinkFairyArmadillo": {"health":1, "attack":1, "blood":0, "bones":0}, # Dies if near water animal
+    "beardedDragon": {"health":2, "attack":1, "blood":1, "bones":0},
+    "tapir": {"health":3, "attack":1, "blood":2, "bones":0},
+    "rhino": {"health":6, "attack":2, "blood":4, "bones":0},
+    "anteater": {"health":2, "attack":1, "blood":1, "bones":0},
+    "capybara": {"health":2, "attack":1, "blood":1, "bones":0},
+    "polarBear": {"health":4, "attack":4, "blood":4, "bones":0},
+    "proboscisMonkey": {"health":3, "attack":2, "blood":3, "bones":0},
+    
+    # Water cards
+    "seal": {"health":3, "attack":1, "blood":2, "bones":0},
+    "goblinShark": {"health":2, "attack":2, "blood":2, "bones":0},
+    "flyingFish": {"health":1, "attack":1, "blood":1, "bones":0},
+    "scorpionFish": {"health":1, "attack":2, "blood":2, "bones":0},
+    "blobFish": {"health":4, "attack":0, "blood":3, "bones":0},
+    "mimicOctopus": {"health":0, "attack":0, "blood":2, "bones":0}, # Mirrors opponent attack and health 
+    "axolotl": {"health":1, "attack":1, "blood":1, "bones":0},
+    "narwhal": {"health":3, "attack":3, "blood":3, "bones":0},
+    "platypus": {"health":2, "attack":2, "blood":2, "bones":0},
+    
+    # Air cards
+    "moorhen": {"health":2, "attack":1, "blood":1, "bones":0},
+    "shoebill": {"health":1, "attack":2, "blood":0, "bones":3},
+    "pigeon": {"health":1, "attack":1, "blood":1, "bones":0},
+    "falcon": {"health":2, "attack":3, "blood":2, "bones":0},
+    "baldEagle": {"health":3, "attack":3, "blood":3, "bones":0},
+    "runnerDuck": {"health":1, "attack":1, "blood":1, "bones":0},
+    "augurBuzzard": {"health":3, "attack":2, "blood":3, "bones":0}, # Dodges first attack when played, 20% dodge chance
+    "roadRunner": {"health":1, "attack":2, "blood":2, "bones":0}, # 10% dodge chance
+    "vulture": {"health":3, "attack":2, "blood":0, "bones":0} # 5% chance to appear in hand when something dies
+}
 
-# title
-pygame.display.set_caption("Inscryption")
-
-# clock
-clock = pygame.time.Clock()
-
-# initiate pygame
 pygame.init()
 
-# font
-font = pygame.font.Font(None, 36)
+screen_width = 1200
+screen_height = 800
+screen = pygame.display.set_mode((screen_width, screen_height))
+pygame.display.set_caption("Inscryption")
 
-# constants
-BLACK = (0, 0, 0)
-WHITE = (255, 255, 255)
-RED = (255, 0, 0)
-GREEN = (0, 255, 0)
-BLUE = (0, 0, 255)
-BROWN = (204, 145, 92)
+card_image = pygame.image.load("inscryptioncard.jpg")
 
-# variables
-cardsize = 100
-cardimg = pygame.image.load("inscryptioncard.jpg")
-card = pygame.transform.scale(cardimg, (cardsize+100, cardsize+150))
-card_rect = card.get_rect(topleft=(screen_width//2-cardsize//2, (screen_height//2)+50))
+def draw_card(card, x, y):
+    card_image = pygame.transform.scale(pygame.image.load("inscryptioncard.jpg"), (100, 150))
+    screen.blit(card_image, (x, y))
+    font = pygame.font.Font(None, 24)
+    text_color = (255, 255, 255)
+    text_x = x + 10
+    text_y = y + 10
+    draw_text(card, font, text_color, screen, text_x, text_y)
+    draw_text("Health: " + str(cards[card]["health"]), font, text_color, screen, text_x, text_y + 30)
+    draw_text("Attack: " + str(cards[card]["attack"]), font, text_color, screen, text_x, text_y + 60)
+    draw_text("Blood: " + str(cards[card]["blood"]), font, text_color, screen, text_x, text_y + 90)
+    draw_text("Bones: " + str(cards[card]["bones"]), font, text_color, screen, text_x, text_y + 120)
 
-# game loop
-while True:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            sys.exit()
+def draw_text(text, font, color, surface, x, y):
+    textobj = font.render(text, 1, color)
+    textrect = textobj.get_rect()
+    textrect.topleft = (x, y)
+    surface.blit(textobj, textrect)
 
-    # background colour
-    screen.fill(WHITE) 
-    
-    # draw
-    screen.blit(card, card_rect)
+def select_random_cards():
+    card_names = list(cards.keys())
+    return random.sample(card_names, 5)
 
-    # write numbers on the card
-    attack_text = font.render(str(cards.hamster["attack"]), True, BLACK)
-    health_text = font.render(str(cards.hamster["health"]), True, BLACK)
-    blood_text = font.render(str(cards.hamster["blood"]), True, BLACK)
-    bones_text = font.render(str(cards.hamster["bones"]), True, BLACK)
-    name_text = font.render(str("Hamster"), True, BLACK)
+def main():
+    clock = pygame.time.Clock()
+    FPS = 60
+    running = True
 
-    attack_text_rect = attack_text.get_rect(midbottom=(card_rect.left + 30, card_rect.bottom - 40))
-    health_text_rect = health_text.get_rect(midbottom=(card_rect.right - 30, card_rect.bottom - 10))
-    blood_text_rect = blood_text.get_rect(midtop=(card_rect.left + 30, card_rect.top + 10))
-    bones_text_rect = bones_text.get_rect(midtop=(card_rect.right - 30, card_rect.top + 10))
-    name_text_rect = name_text.get_rect(midtop=(card_rect.centerx, card_rect.top + 10))
+    player_hand = select_random_cards()
 
-    # display text
-    screen.blit(attack_text, attack_text_rect)
-    screen.blit(health_text, health_text_rect)
-    screen.blit(blood_text, blood_text_rect)
-    screen.blit(bones_text, bones_text_rect)
-    screen.blit(name_text, name_text_rect)
+    while running:
+        screen.fill((0, 0, 0))
 
-    # display update
-    pygame.display.flip()
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
 
-    # set game fps
-    clock.tick(60)
+        for i, card_name in enumerate(player_hand):
+            draw_card(card_name, 50 + i * 120, 400)
+
+        pygame.display.flip()
+        clock.tick(FPS)
+
+    pygame.quit()
+
+if __name__ == "__main__":
+    main()
