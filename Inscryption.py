@@ -29,7 +29,9 @@ BROWN = (204, 145, 92)
 
 # variables
 cardsize = 100
-card = pygame.Rect((screen_width//2-cardsize//2), (screen_height//2+50), cardsize, cardsize*1.7)
+cardimg = pygame.image.load("inscryotioncard.jpg")
+card = pygame.transform.scale(cardimg, (cardsize+100, cardsize+150))
+card_rect = card.get_rect(topleft=(screen_width//2-cardsize//2, (screen_height//2)+50))
 
 # game loop
 while True:
@@ -42,7 +44,7 @@ while True:
     screen.fill(WHITE) 
     
     # draw
-    pygame.draw.rect(screen, BROWN, card)
+    screen.blit(card, card_rect)
 
     # write numbers on the card
     attack_text = font.render(str(cards.hamster["attack"]), True, BLACK)
@@ -51,11 +53,11 @@ while True:
     bones_text = font.render(str(cards.hamster["bones"]), True, BLACK)
     name_text = font.render(str("hamster"), True, BLACK)
 
-    attack_text_rect = attack_text.get_rect(midbottom=(card.centerx + 30, card.bottom - 5))
-    defense_text_rect = defense_text.get_rect(midbottom=(card.centerx - 30, card.bottom - 5))
-    blood_text_rect = blood_text.get_rect(midtop=(card.centerx + 30, card.top + 5))
-    bones_text_rect = bones_text.get_rect(midtop=(card.centerx - 30, card.top + 5))
-    name_text_rect = name_text.get_rect(midtop=(card.centerx, card.top + (cardsize//2)*1.4))
+    attack_text_rect = attack_text.get_rect(midbottom=(card_rect.centerx + 30, card_rect.bottom - 5))
+    defense_text_rect = defense_text.get_rect(midbottom=(card_rect.centerx - 30, card_rect.bottom - 5))
+    blood_text_rect = blood_text.get_rect(midtop=(card_rect.centerx + 30, card_rect.top + 5))
+    bones_text_rect = bones_text.get_rect(midtop=(card_rect.centerx - 30, card_rect.top + 5))
+    name_text_rect = name_text.get_rect(midtop=(card_rect.centerx, card_rect.top + (cardsize//2)*1.4))
 
     # display text
     screen.blit(attack_text, attack_text_rect)
