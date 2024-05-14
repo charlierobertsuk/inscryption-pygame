@@ -1,6 +1,4 @@
 import pygame, random, os
-from PIL import Image
-import pillow_avif
 
 pygame.init()
 
@@ -53,6 +51,7 @@ cards = {
     "Vulture": {"health":3, "attack":2, "blood":0, "bones":0} # 5% chance to appear in hand when something dies
 }
 
+# Window info
 screen_width = 1200
 screen_height = 800
 screen = pygame.display.set_mode((screen_width, screen_height))
@@ -60,10 +59,12 @@ pygame.display.set_caption("Inscryption")
 
 card_image = pygame.image.load("inscryptioncard.jpg")
 
+# Draw card image
 def draw_card(card, x, y):
     card_image = pygame.transform.scale(pygame.image.load("inscryptioncard.jpg"), (200, 300))
     screen.blit(card_image, (x, y))
     
+    # Check for image suffix incase non jpg
     animal_image_path = f"{card.lower()}.jpg" 
     if not os.path.exists(animal_image_path):
         animal_image_path = f"{card.lower()}.png"
@@ -71,13 +72,13 @@ def draw_card(card, x, y):
         animal_image_path = f"{card.lower()}.jfif"
     if not os.path.exists(animal_image_path):
         animal_image_path = f"{card.lower()}.webp"
-    
     try:
         animal_image = pygame.image.load(animal_image_path)
     except pygame.error:
         animal_image = pygame.Surface((80, 80))
         animal_image.fill((255, 0, 0))
     
+    # Draw animal image
     animal_image = pygame.transform.scale(animal_image, (120, 120)) 
 
     animal_x = x + (card_image.get_width() - animal_image.get_width()) // 2
@@ -85,6 +86,7 @@ def draw_card(card, x, y):
 
     screen.blit(animal_image, (animal_x, animal_y))
 
+    # Variables
     font_name = pygame.font.Font(None, 24)
     font_numbers = pygame.font.Font(None, 40)
 
@@ -101,17 +103,14 @@ def draw_card(card, x, y):
     text_x = x + 10
     text_y = y + 10
 
-    # Render the card name text with font size 24
+    # Draw text
     card_name_text = font_name.render(card, True, (255, 255, 255))
     card_name_rect = card_name_text.get_rect(center=(x + card_image.get_width() // 2, y - 10))
     screen.blit(card_name_text, card_name_rect)
-    
-    # Adjusted positions for text
     draw_text(str(cards[card]["blood"]), font_numbers, blood, screen, x + 25, y + 15) # Top left
     draw_text(str(cards[card]["bones"]), font_numbers, bones, screen, x + card_image.get_width() - 35, y + 15) # Top right
     draw_text(str(cards[card]["attack"]), font_numbers, attack, screen, x + 23, y + card_image.get_height() - 72) # Bottom left
     draw_text(str(cards[card]["health"]), font_numbers, health, screen, x + card_image.get_width() - 35, y + card_image.get_height() - 40) # Bottom right
-
 
 def draw_text(text, font, color, surface, x, y):
     textobj = font.render(text, 1, color)
@@ -119,10 +118,12 @@ def draw_text(text, font, color, surface, x, y):
     textrect.topleft = (x, y)
     surface.blit(textobj, textrect)
 
+# Generate random hand of cards
 def select_random_cards():
     card_names = list(cards.keys())
     return random.sample(card_names, 5)
 
+# Main game loop
 def main():
     clock = pygame.time.Clock()
     FPS = 60
@@ -135,19 +136,16 @@ def main():
 
         mouse_x, mouse_y = pygame.mouse.get_pos()
 
-        # Track the index of the card being hovered over
         hovered_card_index = None
 
         for i, card_name in enumerate(player_hand):
             x = 50 + i * 120
             y = 400
 
-            # Check if mouse is over this card
             if x < mouse_x < x + 200 and y < mouse_y < y + 300:
                 hovered_card_index = i
-                break  # Exit loop if a card is found under the mouse
+                break
 
-        # Draw all cards, including the hovered card
         for i, card_name in enumerate(player_hand):
             x = 50 + i * 120
             y = 400
@@ -155,7 +153,6 @@ def main():
             if i != hovered_card_index:
                 draw_card(card_name, x, y)
 
-        # Draw the hovered card on top
         if hovered_card_index is not None:
             draw_card(player_hand[hovered_card_index], 50 + hovered_card_index * 120, 400)
 
@@ -167,8 +164,6 @@ def main():
                 running = False
 
     pygame.quit()
-
-
 
 if __name__ == "__main__":
     main()
