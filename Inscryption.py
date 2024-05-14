@@ -1,4 +1,6 @@
 import pygame, random, os
+from PIL import Image
+import pillow_avif
 
 pygame.init()
 
@@ -37,7 +39,7 @@ cards = {
     "Axolotl": {"health":1, "attack":1, "blood":1, "bones":0},
     "Narwhal": {"health":3, "attack":3, "blood":3, "bones":0},
     "Platypus": {"health":2, "attack":2, "blood":2, "bones":0},
-    "Perry The Platypus": {"health":10, "attack":5, "blood":6, "bones":0}, # Legendary "evolution"
+    "PerryThePlatypus": {"health":10, "attack":5, "blood":6, "bones":0}, # Legendary "evolution"
     
     # Air cards
     "Moorhen": {"health":2, "attack":1, "blood":1, "bones":0},
@@ -66,8 +68,6 @@ def draw_card(card, x, y):
     if not os.path.exists(animal_image_path):
         animal_image_path = f"{card.lower()}.png"
     if not os.path.exists(animal_image_path):
-        animal_image_path = f"{card.lower()}.avif"
-    if not os.path.exists(animal_image_path):
         animal_image_path = f"{card.lower()}.jfif"
     if not os.path.exists(animal_image_path):
         animal_image_path = f"{card.lower()}.webp"
@@ -81,18 +81,26 @@ def draw_card(card, x, y):
     animal_image = pygame.transform.scale(animal_image, (70, 70)) 
 
     animal_x = x + (card_image.get_width() - animal_image.get_width()) // 2
-    animal_y = y + (card_image.get_height() - animal_image.get_height()) // 2
+    animal_y = y + (card_image.get_height() - animal_image.get_height()) // 2 - 10
 
     screen.blit(animal_image, (animal_x, animal_y))
 
     font = pygame.font.Font(None, 18)
-    text_color = (255, 255, 255)
+
+    red = (255, 0, 0)
+    green= (0, 255, 0)
+    blue = (0, 0, 255)
+    blood = (178, 0, 0)
+    bones = (135, 103, 16)
+    health = (225, 90, 184)
+    attack = (0, 0, 0)
+
     text_x = x + 10
     text_y = y + 10
-    draw_text(str(cards[card]["health"]), font, text_color, screen, text_x + 72, text_y + 120)
-    draw_text(str(cards[card]["attack"]), font, text_color, screen, text_x + 2, text_y + 105)
-    draw_text(str(cards[card]["blood"]), font, text_color, screen, text_x + 72, text_y)
-    draw_text(str(cards[card]["bones"]), font, text_color, screen, text_x + 2, text_y)
+    draw_text(str(cards[card]["health"]), font, health, screen, text_x + 72, text_y + 120)
+    draw_text(str(cards[card]["attack"]), font, attack, screen, text_x + 2, text_y + 105)
+    draw_text(str(cards[card]["blood"]), font, blood, screen, text_x + 72, text_y)
+    draw_text(str(cards[card]["bones"]), font, bones, screen, text_x + 2, text_y)
 
 def draw_text(text, font, color, surface, x, y):
     textobj = font.render(text, 1, color)
