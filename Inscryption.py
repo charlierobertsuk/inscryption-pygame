@@ -2,11 +2,6 @@ import pygame, random, os
 
 pygame.init()
 
-def load_image(folder_name, file_name):
-    folder_path = os.path.join(IMAGE_FOLDER, folder_name)
-    full_path = os.path.join(folder_path, file_name)
-    return pygame.image.load(full_path)
-
 cards = {
     # Talking cards
     "Bullet Ant": {"health":1, "attack":1, "blood":1, "bones":0}, 
@@ -75,7 +70,6 @@ def draw_card(card, x, y):
     draw_text(str(cards[card]["attack"]), font, text_color, screen, text_x + 2, text_y + 105)
     draw_text(str(cards[card]["blood"]), font, text_color, screen, text_x + 72, text_y)
     draw_text(str(cards[card]["bones"]), font, text_color, screen, text_x + 2, text_y)
-    testimg=cards[card]["test"]
 
 def draw_text(text, font, color, surface, x, y):
     textobj = font.render(text, 1, color)
