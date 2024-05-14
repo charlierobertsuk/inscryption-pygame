@@ -1,10 +1,16 @@
-import pygame
-import random
+import pygame, random, os
+
+pygame.init()
+
+def load_image(folder_name, file_name):
+    folder_path = os.path.join(IMAGE_FOLDER, folder_name)
+    full_path = os.path.join(folder_path, file_name)
+    return pygame.image.load(full_path)
 
 cards = {
     # Talking cards
     "Bullet Ant": {"health":1, "attack":1, "blood":1, "bones":0}, 
-    "Pine Martin": {"health":2, "attack":1, "blood":1, "bones":0}, 
+    "Pine Marten": {"health":2, "attack":1, "blood":1, "bones":0}, 
     "Brian Coral": {"health":4, "attack":0, "blood":0, "bones":4}, # Says: "Hi, I'm Brian"
     
     # Ground cards
@@ -15,11 +21,10 @@ cards = {
     "Black Mamba": {"health":1, "attack":2, "blood":0, "bones":4}, # Kills cards instantly
     "Hopping Mouse": {"health":1, "attack":1, "blood":0, "bones":1},
     "Armadillo": {"health":4, "attack":1, "blood":3, "bones":0}, # Reflects 1 of incoming damage
-    "Opossum": {"health":1, "attack":1, "blood":1, "bones":0},
+    "Opossum": {"health":1, "attack":1, "blood":1, "bones":0},  
     "Slow Loris": {"health":1, "attack":3, "blood":2, "bones":0}, # 1 venom damage to opponent for 3 turns
     "Wolverine": {"health":2, "attack":2, "blood":2, "bones":0},
     "Hedgehog": {"health":1, "attack":1, "blood":1, "bones":0},
-    "Bearded Dragon": {"health":2, "attack":1, "blood":1, "bones":0},
     "Tapir": {"health":3, "attack":1, "blood":2, "bones":0},
     "Rhino": {"health":6, "attack":2, "blood":4, "bones":0},
     "Anteater": {"health":2, "attack":1, "blood":1, "bones":0},
@@ -31,12 +36,13 @@ cards = {
     "Seal": {"health":3, "attack":1, "blood":2, "bones":0},
     "Goblin Shark": {"health":2, "attack":2, "blood":2, "bones":0},
     "Flying Fish": {"health":1, "attack":1, "blood":1, "bones":0},
-    "Salmon": {"health":2, "attack":1, "blood":2, "bones":0},
+    "Tuna": {"health":2, "attack":1, "blood":2, "bones":0},
     "Blob Fish": {"health":4, "attack":0, "blood":3, "bones":0},
     "Mimic Octopus": {"health":0, "attack":0, "blood":2, "bones":0}, # Mirrors opponent attack and health 
     "Axolotl": {"health":1, "attack":1, "blood":1, "bones":0},
     "Narwhal": {"health":3, "attack":3, "blood":3, "bones":0},
     "Platypus": {"health":2, "attack":2, "blood":2, "bones":0},
+    "Perry The Platypus": {"health":10, "attack":5, "blood":6, "bones":0}, # Legendary "evolution"
     
     # Air cards
     "Moorhen": {"health":2, "attack":1, "blood":1, "bones":0},
@@ -49,8 +55,6 @@ cards = {
     "Road Runner": {"health":1, "attack":2, "blood":2, "bones":0}, # 10% dodge chance
     "Vulture": {"health":3, "attack":2, "blood":0, "bones":0} # 5% chance to appear in hand when something dies
 }
-
-pygame.init()
 
 screen_width = 1200
 screen_height = 800
@@ -66,11 +70,12 @@ def draw_card(card, x, y):
     text_color = (255, 255, 255)
     text_x = x + 10
     text_y = y + 10
-    draw_text(card, font, text_color, screen, text_x, text_y)
-    draw_text("Health: " + str(cards[card]["health"]), font, text_color, screen, text_x, text_y + 30)
-    draw_text("Attack: " + str(cards[card]["attack"]), font, text_color, screen, text_x, text_y + 60)
-    draw_text("Blood: " + str(cards[card]["blood"]), font, text_color, screen, text_x, text_y + 90)
-    draw_text("Bones: " + str(cards[card]["bones"]), font, text_color, screen, text_x, text_y + 120)
+    draw_text(card, font, text_color, screen, text_x, text_y + 50)
+    draw_text(str(cards[card]["health"]), font, text_color, screen, text_x + 72, text_y + 120)
+    draw_text(str(cards[card]["attack"]), font, text_color, screen, text_x + 2, text_y + 105)
+    draw_text(str(cards[card]["blood"]), font, text_color, screen, text_x + 72, text_y)
+    draw_text(str(cards[card]["bones"]), font, text_color, screen, text_x + 2, text_y)
+    testimg=cards[card]["test"]
 
 def draw_text(text, font, color, surface, x, y):
     textobj = font.render(text, 1, color)
