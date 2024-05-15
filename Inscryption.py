@@ -143,7 +143,7 @@ def main():
             # Check if mouse is over this card
             if x < mouse_x < x + 200 and y < mouse_y < y + 300:
                 hovered_card_index = i
-                break  # Exit loop if a card is found under the mouse
+                break 
 
         # Draw all cards, including the hovered card
         for i, card_name in enumerate(player_hand):
