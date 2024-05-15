@@ -7,15 +7,14 @@ cards = {
     "BulletAnt": {"health":1, "attack":1, "blood":1, "bones":0}, 
     "PineMarten": {"health":2, "attack":1, "blood":1, "bones":0}, 
     "BrianCoral": {"health":4, "attack":0, "blood":0, "bones":4}, # Says: "Hi, I'm Brian"
-    
-    # Ground cards
+    # Starter cards
     "Hamster": {"health":1, "attack":0, "blood":0, "bones":0}, # Starter card
     "Mole": {"health":1, "attack":0, "blood":0, "bones":0}, # Alternative starter card, moves to block if nothing to block
-    
+    # Ground cards
     "Deer": {"health":3, "attack":2, "blood":0, "bones":3},
     "BlackMamba": {"health":1, "attack":2, "blood":0, "bones":4}, # Kills cards instantly
     "HoppingMouse": {"health":1, "attack":1, "blood":0, "bones":1},
-    "Armadillo": {"health":4, "attack":1, "blood":3, "bones":0}, # Reflects 1 of incoming damage
+    "Armadillo": {"health":4, "attack":1, "blood":3, "bones":0}, # Reflects 1 incoming damage every 3 turns
     "Opossum": {"health":1, "attack":1, "blood":1, "bones":0},  
     "SlowLoris": {"health":1, "attack":3, "blood":2, "bones":0}, # 1 venom damage to opponent for 3 turns
     "Wolverine": {"health":2, "attack":2, "blood":2, "bones":0},
@@ -26,7 +25,6 @@ cards = {
     "Capybara": {"health":2, "attack":1, "blood":1, "bones":0},
     "PolarBear": {"health":4, "attack":4, "blood":4, "bones":0},
     "Monkey": {"health":3, "attack":2, "blood":3, "bones":0},
-    
     # Water cards
     "Seal": {"health":3, "attack":1, "blood":2, "bones":0},
     "GoblinShark": {"health":2, "attack":2, "blood":2, "bones":0},
@@ -37,8 +35,7 @@ cards = {
     "Axolotl": {"health":1, "attack":1, "blood":1, "bones":0},
     "Narwhal": {"health":3, "attack":3, "blood":3, "bones":0},
     "Platypus": {"health":2, "attack":2, "blood":2, "bones":0},
-    "PerryThePlatypus": {"health":10, "attack":5, "blood":6, "bones":0}, # Legendary "evolution"
-    
+    "PerryThePlatypus": {"health":10, "attack":5, "blood":6, "bones":0}, # Legendary "evolution" of platypus
     # Air cards
     "Moorhen": {"health":2, "attack":1, "blood":1, "bones":0},
     "Shoebill": {"health":1, "attack":2, "blood":0, "bones":3},
@@ -123,7 +120,7 @@ def select_random_cards():
     card_names = list(cards.keys())
     return random.sample(card_names, 5)
 
-# Main game loop
+# Main loop
 def main():
     clock = pygame.time.Clock()
     FPS = 60
@@ -136,25 +133,28 @@ def main():
 
         mouse_x, mouse_y = pygame.mouse.get_pos()
 
+        # Track the index of the card being hovered over
         hovered_card_index = None
 
         for i, card_name in enumerate(player_hand):
             x = 50 + i * 120
             y = 400
 
+            # Check if mouse is over this card
             if x < mouse_x < x + 200 and y < mouse_y < y + 300:
                 hovered_card_index = i
-                break
+                break  # Exit loop if a card is found under the mouse
 
+        # Draw all cards, including the hovered card
         for i, card_name in enumerate(player_hand):
             x = 50 + i * 120
             y = 400
 
             if i != hovered_card_index:
                 draw_card(card_name, x, y)
-
-        if hovered_card_index is not None:
-            draw_card(player_hand[hovered_card_index], 50 + hovered_card_index * 120, 400)
+            else:
+                # Raise the hovered card up by 20 pixels
+                draw_card(card_name, x, y - 20)
 
         pygame.display.flip()
         clock.tick(FPS)
@@ -164,6 +164,7 @@ def main():
                 running = False
 
     pygame.quit()
+
 
 if __name__ == "__main__":
     main()
