@@ -109,6 +109,10 @@ def draw_card(card, x, y):
     draw_text(str(cards[card]["attack"]), font_numbers, attack, screen, x + 23, y + card_image.get_height() - 72) # Bottom left
     draw_text(str(cards[card]["health"]), font_numbers, health, screen, x + card_image.get_width() - 35, y + card_image.get_height() - 40) # Bottom right
 
+    # Brian
+    # if "BrianCoral" in player_hand and card == "BrianCoral":
+    #     draw_text("Hi, I'm Brian", font_name, white, screen, x + 100, y + 150)
+
 def draw_text(text, font, color, surface, x, y):
     textobj = font.render(text, 1, color)
     textrect = textobj.get_rect()
