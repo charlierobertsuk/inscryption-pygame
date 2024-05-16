@@ -9,7 +9,7 @@ cards = {
     "BrianCoral": {"health":4, "attack":0, "blood":0, "bones":4}, # Says: "Hi, I'm Brian"
     # Starter cards
     "Hamster": {"health":1, "attack":0, "blood":0, "bones":0}, # Starter card
-    "Mole": {"health":1, "attack":0, "blood":0, "bones":0}, # Alternative starter card, moves to block if nothing to block
+    "Mole": {"health":2, "attack":0, "blood":0, "bones":0}, # Alternative starter card, moves to block if nothing to block
     # Ground cards
     "Deer": {"health":3, "attack":2, "blood":0, "bones":3},
     "BlackMamba": {"health":1, "attack":2, "blood":0, "bones":4}, # Kills cards instantly
@@ -35,7 +35,7 @@ cards = {
     "Axolotl": {"health":1, "attack":1, "blood":1, "bones":0},
     "Narwhal": {"health":3, "attack":3, "blood":3, "bones":0},
     "Platypus": {"health":2, "attack":2, "blood":2, "bones":0},
-    "PerryThePlatypus": {"health":10, "attack":5, "blood":6, "bones":0}, # Legendary "evolution" of platypus
+    "PerryThePlatypus": {"health":9, "attack":5, "blood":6, "bones":0}, # Legendary "evolution" of platypus
     # Air cards
     "Moorhen": {"health":2, "attack":1, "blood":1, "bones":0},
     "Shoebill": {"health":1, "attack":2, "blood":0, "bones":3},
@@ -129,7 +129,10 @@ def main():
     player_hand = select_random_cards()
 
     while running:
+        tableorig=pygame.image.load("assets/table.jpg")
+        table = pygame.transform.scale(tableorig, (screen_width, screen_height)) 
         screen.fill((0, 0, 0))
+        screen.blit(table, (0, 0))
 
         mouse_x, mouse_y = pygame.mouse.get_pos()
         hovered_card_index = None
@@ -153,7 +156,7 @@ def main():
         # Draw hovered card on top
         if hovered_card_index is not None:
             x = 50 + hovered_card_index * 120
-            y = 400 - 20  # Lift the hovered card up by 20 pixels
+            y = 400 - 20
             draw_card(player_hand[hovered_card_index], x, y)
 
         pygame.display.flip()
