@@ -54,21 +54,21 @@ screen_height = 800
 screen = pygame.display.set_mode((screen_width, screen_height))
 pygame.display.set_caption("Inscryption")
 
-card_image = pygame.image.load("inscryptioncard.jpg")
+card_image = pygame.image.load("assets/inscryptioncard.jpg")
 
 # Draw card image
 def draw_card(card, x, y):
-    card_image = pygame.transform.scale(pygame.image.load("inscryptioncard.jpg"), (200, 300))
+    card_image = pygame.transform.scale(pygame.image.load("assets/inscryptioncard.jpg"), (200, 300))
     screen.blit(card_image, (x, y))
     
     # Check for image suffix incase non jpg
-    animal_image_path = f"{card.lower()}.jpg" 
+    animal_image_path = f"card_thumbnail/{card.lower()}.jpg" 
     if not os.path.exists(animal_image_path):
-        animal_image_path = f"{card.lower()}.png"
+        animal_image_path = f"card_thumbnail/{card.lower()}.png"
     if not os.path.exists(animal_image_path):
-        animal_image_path = f"{card.lower()}.jfif"
+        animal_image_path = f"card_thumbnail/{card.lower()}.jfif"
     if not os.path.exists(animal_image_path):
-        animal_image_path = f"{card.lower()}.webp"
+        animal_image_path = f"card_thumbnail/{card.lower()}.webp"
     try:
         animal_image = pygame.image.load(animal_image_path)
     except pygame.error:
@@ -132,29 +132,29 @@ def main():
         screen.fill((0, 0, 0))
 
         mouse_x, mouse_y = pygame.mouse.get_pos()
-
-        # Track the index of the card being hovered over
         hovered_card_index = None
 
         for i, card_name in enumerate(player_hand):
             x = 50 + i * 120
             y = 400
 
-            # Check if mouse is over this card
+            # Check if mouse is over card
             if x < mouse_x < x + 200 and y < mouse_y < y + 300:
                 hovered_card_index = i
                 break 
 
-        # Draw all cards, including the hovered card
+        # Draw non-hovered cards first
         for i, card_name in enumerate(player_hand):
-            x = 50 + i * 120
-            y = 400
-
             if i != hovered_card_index:
+                x = 50 + i * 120
+                y = 400
                 draw_card(card_name, x, y)
-            else:
-                # Raise the hovered card up by 20 pixels
-                draw_card(card_name, x, y - 20)
+
+        # Draw hovered card on top
+        if hovered_card_index is not None:
+            x = 50 + hovered_card_index * 120
+            y = 400 - 20  # Lift the hovered card up by 20 pixels
+            draw_card(player_hand[hovered_card_index], x, y)
 
         pygame.display.flip()
         clock.tick(FPS)
@@ -164,7 +164,6 @@ def main():
                 running = False
 
     pygame.quit()
-
 
 if __name__ == "__main__":
     main()
