@@ -61,7 +61,7 @@ def draw_card(card, x, y):
     card_image = pygame.transform.scale(pygame.image.load("assets/inscryptioncard.jpg"), (200, 300))
     screen.blit(card_image, (x, y))
     
-    # Check for image suffix incase non jpg
+    # Check for image suffix in case non jpg
     animal_image_path = f"card_thumbnail/{card.lower()}.jpg" 
     if not os.path.exists(animal_image_path):
         animal_image_path = f"card_thumbnail/{card.lower()}.png"
@@ -88,8 +88,9 @@ def draw_card(card, x, y):
     font_numbers = pygame.font.Font(None, 40)
 
     red = (255, 0, 0)
-    green= (0, 255, 0)
+    green = (0, 255, 0)
     blue = (0, 0, 255)
+    orange = (255, 165, 0)
     white = (255, 255, 255)
     black = (0, 0, 0)
     blood = (178, 0, 0)
@@ -100,7 +101,7 @@ def draw_card(card, x, y):
     text_x = x + 10
     text_y = y + 10
 
-    # Draw text
+    # Draw 
     card_name_text = font_name.render(card, True, (255, 255, 255))
     card_name_rect = card_name_text.get_rect(center=(x + card_image.get_width() // 2, y - 10))
     screen.blit(card_name_text, card_name_rect)
@@ -108,6 +109,11 @@ def draw_card(card, x, y):
     draw_text(str(cards[card]["bones"]), font_numbers, bones, screen, x + card_image.get_width() - 35, y + 15) # Top right
     draw_text(str(cards[card]["attack"]), font_numbers, attack, screen, x + 23, y + card_image.get_height() - 72) # Bottom left
     draw_text(str(cards[card]["health"]), font_numbers, health, screen, x + card_image.get_width() - 35, y + card_image.get_height() - 40) # Bottom right
+
+    play_square = pygame.Surface((220, 320))
+    play_square.fill(orange)
+    play_square_rect = play_square.get_rect(topleft=(100, 100))
+    screen.blit(play_square, play_square_rect)
 
     # Brian
     # if "BrianCoral" in player_hand and card == "BrianCoral":
@@ -131,6 +137,7 @@ def main():
     running = True
 
     player_hand = select_random_cards()
+    y_offset = 0 
 
     while running:
         tableorig=pygame.image.load("assets/table.jpg")
@@ -143,7 +150,7 @@ def main():
 
         for i, card_name in enumerate(player_hand):
             x = 50 + i * 120
-            y = 400
+            y = 400 + y_offset
 
             # Check if mouse is over card
             if x < mouse_x < x + 200 and y < mouse_y < y + 300:
@@ -154,13 +161,13 @@ def main():
         for i, card_name in enumerate(player_hand):
             if i != hovered_card_index:
                 x = 50 + i * 120
-                y = 400
+                y = 400 + y_offset
                 draw_card(card_name, x, y)
 
         # Draw hovered card on top
         if hovered_card_index is not None:
             x = 50 + hovered_card_index * 120
-            y = 400 - 20
+            y = 400 - 20 + y_offset
             draw_card(player_hand[hovered_card_index], x, y)
 
         pygame.display.flip()
@@ -169,6 +176,11 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_w and y_offset==300:
+                    y_offset -= 300
+                elif event.key == pygame.K_s and y_offset==0:
+                    y_offset += 300
 
     pygame.quit()
 
