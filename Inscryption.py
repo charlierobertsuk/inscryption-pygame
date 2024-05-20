@@ -2,6 +2,14 @@ import pygame, random, os
 
 pygame.init()
 
+# Get display info
+infoObject = pygame.display.Info()
+screen_width = infoObject.current_w
+screen_height = infoObject.current_h
+
+screen = pygame.display.set_mode((screen_width, screen_height), pygame.FULLSCREEN)
+pygame.display.set_caption("Inscryption")
+
 cards = {
     # Talking cards
     "BulletAnt": {"health":1, "attack":1, "blood":1, "bones":0}, 
@@ -47,12 +55,6 @@ cards = {
     "RoadRunner": {"health":1, "attack":2, "blood":2, "bones":0}, # 10% dodge chance
     "Vulture": {"health":3, "attack":2, "blood":0, "bones":0} # 5% chance to appear in hand when something dies
 }
-
-# Window info
-screen_width = 1200
-screen_height = 800
-screen = pygame.display.set_mode((screen_width, screen_height))
-pygame.display.set_caption("Inscryption")
 
 card_image = pygame.image.load("assets/inscryptioncard.jpg")
 
@@ -140,11 +142,18 @@ def main():
         screen.blit(table, (0, 0))
         
         # Squares to play cards into
+        play_squares = []
+        x = 40
         orange = (255, 165, 0)
-        play_square = pygame.Surface((220, 320))
-        play_square.fill(orange)
-        play_square_rect = play_square.get_rect(topleft=(40, 40))
-        screen.blit(play_square, play_square_rect)
+        for i in range(5):
+            play_square = pygame.Surface((screen_width//5 - 40, screen_height//3 - 40))
+            play_square.fill(orange)
+            play_square_rect = play_square.get_rect(topleft=(x, 40))
+            play_squares.append((play_square, play_square_rect))
+            x += 260
+
+        for play_square, play_square_rect in play_squares:
+            screen.blit(play_square, play_square_rect)
 
         mouse_x, mouse_y = pygame.mouse.get_pos()
         hovered_card_index = None
@@ -178,10 +187,12 @@ def main():
             if event.type == pygame.QUIT:
                 running = False
             elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_w and y_offset==300:
+                if event.key == pygame.K_w and y_offset==300: # Card up
                     y_offset -= 300
-                elif event.key == pygame.K_s and y_offset==0:
+                elif event.key == pygame.K_s and y_offset==0: # Card down
                     y_offset += 300
+                if event.key == pygame.K_ESCAPE: # Leave the game
+                    pygame.quit()
 
     pygame.quit()
 
