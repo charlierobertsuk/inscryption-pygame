@@ -90,7 +90,6 @@ def draw_card(card, x, y):
     red = (255, 0, 0)
     green = (0, 255, 0)
     blue = (0, 0, 255)
-    orange = (255, 165, 0)
     white = (255, 255, 255)
     black = (0, 0, 0)
     blood = (178, 0, 0)
@@ -109,11 +108,6 @@ def draw_card(card, x, y):
     draw_text(str(cards[card]["bones"]), font_numbers, bones, screen, x + card_image.get_width() - 35, y + 15) # Top right
     draw_text(str(cards[card]["attack"]), font_numbers, attack, screen, x + 23, y + card_image.get_height() - 72) # Bottom left
     draw_text(str(cards[card]["health"]), font_numbers, health, screen, x + card_image.get_width() - 35, y + card_image.get_height() - 40) # Bottom right
-
-    play_square = pygame.Surface((220, 320))
-    play_square.fill(orange)
-    play_square_rect = play_square.get_rect(topleft=(100, 100))
-    screen.blit(play_square, play_square_rect)
 
     # Brian
     # if "BrianCoral" in player_hand and card == "BrianCoral":
@@ -144,6 +138,13 @@ def main():
         table = pygame.transform.scale(tableorig, (screen_width, screen_height)) 
         screen.fill((0, 0, 0))
         screen.blit(table, (0, 0))
+        
+        # Squares to play cards into
+        orange = (255, 165, 0)
+        play_square = pygame.Surface((220, 320))
+        play_square.fill(orange)
+        play_square_rect = play_square.get_rect(topleft=(40, 40))
+        screen.blit(play_square, play_square_rect)
 
         mouse_x, mouse_y = pygame.mouse.get_pos()
         hovered_card_index = None
