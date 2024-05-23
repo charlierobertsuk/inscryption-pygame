@@ -134,26 +134,28 @@ def main():
 
     player_hand = select_random_cards()
     y_offset = 0 
+    selected_card_index = None
+
+    play_squares = []
+    x = 40
+    orange = (255, 165, 0)
+    for i in range(5):
+        play_square = pygame.Surface((screen_width//5 - 40, screen_height//3 - 40))
+        play_square.fill(orange)
+        play_square_rect = play_square.get_rect(topleft=(x, 40))
+        play_squares.append((play_square, play_square_rect, None))  # Adding a third element for the card placed
+        x += 260
 
     while running:
         tableorig=pygame.image.load("assets/table.jpg")
         table = pygame.transform.scale(tableorig, (screen_width, screen_height)) 
         screen.fill((0, 0, 0))
         screen.blit(table, (0, 0))
-        
-        # Squares to play cards into
-        play_squares = []
-        x = 40
-        orange = (255, 165, 0)
-        for i in range(5):
-            play_square = pygame.Surface((screen_width//5 - 40, screen_height//3 - 40))
-            play_square.fill(orange)
-            play_square_rect = play_square.get_rect(topleft=(x, 40))
-            play_squares.append((play_square, play_square_rect))
-            x += 260
 
-        for play_square, play_square_rect in play_squares:
+        for play_square, play_square_rect, placed_card in play_squares:
             screen.blit(play_square, play_square_rect)
+            if placed_card:
+                draw_card(placed_card, play_square_rect.x, play_square_rect.y)
 
         mouse_x, mouse_y = pygame.mouse.get_pos()
         hovered_card_index = None
@@ -193,6 +195,24 @@ def main():
                     y_offset += 300
                 if event.key == pygame.K_ESCAPE: # Leave the game
                     pygame.quit()
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                if event.button == 1:  # Left mouse button
+                    # Check if clicking on a card
+                    for i, card_name in enumerate(player_hand):
+                        x = 50 + i * 120
+                        y = 400 + y_offset
+                        if x < mouse_x < x + 200 and y < mouse_y < y + 300:
+                            selected_card_index = i
+                            break
+
+                    # Check if clicking on a play square
+                    if selected_card_index is not None:
+                        for j, (play_square, play_square_rect, placed_card) in enumerate(play_squares):
+                            if play_square_rect.collidepoint(mouse_x, mouse_y) and not placed_card:
+                                play_squares[j] = (play_square, play_square_rect, player_hand[selected_card_index])
+                                player_hand.pop(selected_card_index)
+                                selected_card_index = None
+                                break
 
     pygame.quit()
 
